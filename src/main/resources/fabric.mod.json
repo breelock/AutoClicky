@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "autoclicky",
+	"version": "${version}",
+	"name": "AutoClicky",
+	"description": "Simple autoclicker in minecraft",
+	"authors": [
+		"breelock"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/autoclicky/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.breelock.autoclicky.AutoClicky"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "1.16.5",
+		"java": ">=8",
+		"fabric": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
