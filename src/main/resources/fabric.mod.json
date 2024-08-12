@@ -3,10 +3,13 @@
 	"id": "autoclicky",
 	"version": "${version}",
 	"name": "AutoClicky",
-	"description": "Simple autoclicker in minecraft",
+	"description": "Simple autoclicker mod in minecraft",
 	"authors": [
 		"breelock"
 	],
+	"contact": {
+		"sources": "https://github.com/breelock/AutoClicky"
+	},
 	"license": "CC0-1.0",
 	"icon": "assets/autoclicky/icon.png",
 	"environment": "*",
