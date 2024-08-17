@@ -43,10 +43,10 @@ public class OldCombat extends Screen {
         int checkboxWidth = 95;
 
         // Select PvP system button
-        this.addButton(new ButtonWidget(this.width / 2 - 50, startY - spacing + 7, 100, 20, new LiteralText(ModConfig.pvpSystems.get(0)), button -> {
+        addDrawableChild(new ButtonWidget(this.width / 2 - 50, startY - spacing + 7, 100, 20, new LiteralText(ModConfig.pvpSystems.get(0)), button -> {
             save(false);
             ModConfig.selectedPvp = (ModConfig.PvP.values()[(ModConfig.selectedPvp.ordinal() + 1) % ModConfig.pvpSystems.size()]);
-            this.client.openScreen(new NewCombat());
+            this.client.setScreen(new NewCombat());
         }));
 
         // Left click - minimum click delay slider
@@ -61,7 +61,7 @@ public class OldCombat extends Screen {
                 ModConfig.OldPvP.leftMinDelay = (int)(this.value * 100);
             }
         };
-        this.children.add(leftMinDelaySlider);
+        addDrawableChild(leftMinDelaySlider);
 
         // Left click - maximum click delay slider
         leftMaxDelaySlider = new TooltipSliderWidget(centerX - widgetWidth - columnSpacing / 2, startY + 2 * spacing, widgetWidth, 20, new LiteralText("Max Delay: " + ModConfig.OldPvP.leftMaxDelay), ModConfig.OldPvP.leftMaxDelay / 100.0, "Delay between clicks in ticks (1 tick = 50 ms)") {
@@ -75,7 +75,7 @@ public class OldCombat extends Screen {
                 ModConfig.OldPvP.leftMaxDelay = (int)(this.value * 100);
             }
         };
-        this.children.add(leftMaxDelaySlider);
+        addDrawableChild(leftMaxDelaySlider);
 
         // Right click - minimum click delay slider
         rightMinDelaySlider = new TooltipSliderWidget(centerX + columnSpacing / 2, startY + spacing, widgetWidth, 20, new LiteralText("Min Delay: " + ModConfig.OldPvP.rightMinDelay), ModConfig.OldPvP.rightMinDelay / 100.0, "Delay between clicks in ticks (1 tick = 50 ms)") {
@@ -89,7 +89,7 @@ public class OldCombat extends Screen {
                 ModConfig.OldPvP.rightMinDelay = (int)(this.value * 100);
             }
         };
-        this.children.add(rightMinDelaySlider);
+        addDrawableChild(rightMinDelaySlider);
 
         // Right click - maximum click delay slider
         rightMaxDelaySlider = new TooltipSliderWidget(centerX + columnSpacing / 2, startY + 2 * spacing, widgetWidth, 20, new LiteralText("Max Delay: " + ModConfig.OldPvP.rightMaxDelay), ModConfig.OldPvP.rightMaxDelay / 100.0, "Delay between clicks in ticks (1 tick = 50 ms)") {
@@ -103,33 +103,33 @@ public class OldCombat extends Screen {
                 ModConfig.OldPvP.rightMaxDelay = (int)(this.value * 100);
             }
         };
-        this.children.add(rightMaxDelaySlider);
+        addDrawableChild(rightMaxDelaySlider);
 
         // First click is instant checkbox
         firstClickIsInstantCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 3 * spacing, 85, 20, new LiteralText("First instant"), ModConfig.OldPvP.firstClickIsInstant, "The first click is instant, will not wait for a delay");
-        this.children.add(firstClickIsInstantCheckbox);
+        addDrawableChild(firstClickIsInstantCheckbox);
 
         // Show message checkbox
         showMessageCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 3 * spacing, 73, 20, new LiteralText("Messages"), ModConfig.OldPvP.showMessage, "Show autoclicky messages in action bar");
-        this.children.add(showMessageCheckbox);
+        addDrawableChild(showMessageCheckbox);
 
         // Auto jump checkbox
         autoJumpCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 4 * spacing, 74, 20, new LiteralText("Auto jump"), ModConfig.OldPvP.autoJump, "Autoclicky will jump when targeting an entity");
-        this.children.add(autoJumpCheckbox);
+        addDrawableChild(autoJumpCheckbox);
 
         // Attack only when targeting an entity checkbox
         onlyEntityCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 4 * spacing, 78, 20, new LiteralText("Only entity"), ModConfig.OldPvP.onlyEntity, "Autoclicky will only attack when targeting an entity");
-        this.children.add(onlyEntityCheckbox);
+        addDrawableChild(onlyEntityCheckbox);
 
         // Save button
-        this.addButton(new ButtonWidget(centerX + 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText("Save"), button -> {
+        addDrawableChild(new ButtonWidget(centerX + 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText("Save"), button -> {
             save(false);
-            this.client.openScreen(null); // Close the screen
+            this.client.setScreen(null); // Close the screen
         }));
 
         // Exit without saving button
-        this.addButton(new ButtonWidget(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText("Cancel"), button -> {
-            this.client.openScreen(null); // Close the screen without saving
+        addDrawableChild(new ButtonWidget(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText("Cancel"), button -> {
+            this.client.setScreen(null); // Close the screen without saving
         }));
     }
 
@@ -188,7 +188,7 @@ public class OldCombat extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
-            this.client.openScreen(null); // Close the screen on ESC key press
+            this.client.setScreen(null); // Close the screen on ESC key press
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);

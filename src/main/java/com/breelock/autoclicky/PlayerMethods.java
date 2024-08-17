@@ -17,7 +17,7 @@ public class PlayerMethods {
                             client.player.jump();
 
                         if (client.player.getAttackCooldownProgress(0.0F) >= 1.0F) {
-                            if (!client.player.isOnGround() && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.abilities.flying)
+                            if (!client.player.isOnGround() && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.getAbilities().flying)
                                 PlayerMethods.attackEntity(client);
                         }
                     }
@@ -28,7 +28,7 @@ public class PlayerMethods {
 
                     if (client.player.getAttackCooldownProgress(0.0F) >= 1.0F) {
                         if (client.crosshairTarget.getType() == HitResult.Type.ENTITY) {
-                            if (!client.player.isOnGround() && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.abilities.flying)
+                            if (!client.player.isOnGround() && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.getAbilities().flying)
                                 PlayerMethods.attackEntity(client);
                         }
                         else if (client.crosshairTarget.getType() == HitResult.Type.BLOCK)

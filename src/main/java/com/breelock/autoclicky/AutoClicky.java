@@ -58,7 +58,7 @@ public class AutoClicky implements ModInitializer {
 
 				// Open config screen
 				else if (settingsBind.wasPressed())
-					client.openScreen(isNewPvp ? new NewCombat() : new OldCombat());
+					client.setScreen(isNewPvp ? new NewCombat() : new OldCombat());
 
 				// Switch PvP system to new
 				else if (switchPvPSystemBind.wasPressed()) {
@@ -124,6 +124,8 @@ public class AutoClicky implements ModInitializer {
 				currentDelay = Utils.randint(ModConfig.NewPvP.leftMinDelay, ModConfig.NewPvP.leftMaxDelay);
             else if (!isNewPvP && !ModConfig.OldPvP.firstClickIsInstant && btnIsNowEnabled)
                 currentDelay = Utils.randint(ModConfig.OldPvP.leftMinDelay, ModConfig.OldPvP.leftMaxDelay);
+			else
+				currentDelay = 0;
 
 			if (isNewPvP && ModConfig.NewPvP.showMessage || !isNewPvP && ModConfig.OldPvP.showMessage)
 				client.player.sendMessage(new LiteralText(String.format("[%s mouse button] AutoClicky %sactivated%s", isLeft ? "Left" : "Right", btnIsNowEnabled ? "" : "de", isLeft ? isNewPvP ? " [New PvP]" : " [Old PvP]" : "")), true);
