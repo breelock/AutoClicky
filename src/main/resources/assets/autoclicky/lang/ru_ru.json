@@ -1,28 +1,27 @@
 {
-  "gui.autoclicky.leftBind": "Left click",
-  "gui.autoclicky.rightBind": "Right click",
-  "gui.autoclicky.settingsBind": "Settings",
-  "gui.autoclicky.switchPvPSystemBind": "Switch PvP system",
-
-  "gui.autoclicky.oldCombatTitle": "Old combat (1.8)",
-  "gui.autoclicky.newCombatTitle": "New combat (1.9+)",
-
-  "gui.autoclicky.minDelay": "Min delay",
-  "gui.autoclicky.maxDelay": "Max delay",
-  "gui.autoclicky.delayTooltip": "Delay between clicks in ticks (1 tick = 50 ms)",
-
-  "gui.autoclicky.interrupt": "Interrupt",
-  "gui.autoclicky.interrupt.tooltip": "Interrupt the item use when attack",
-
-  "gui.autoclicky.messages": "Messages",
-  "gui.autoclicky.messages.tooltip": "Show autoclicky messages in action bar",
-
-  "gui.autoclicky.autoJump": "Auto jump",
-  "gui.autoclicky.autoJump.tooltip": "Autoclicky will jump when targeting an entity",
-
-  "gui.autoclicky.onlyEntity": "Only entity",
-  "gui.autoclicky.onlyEntity.tooltip": "Autoclicky will only attack when targeting an entity",
-
-  "gui.autoclicky.save": "Save",
-  "gui.autoclicky.cancel": "Cancel"
+  "gui.autoclicky.leftBind": "Левый клик",
+  "gui.autoclicky.rightBind": "Правый клик",
+  "gui.autoclicky.settingsBind": "Настройки",
+  "gui.autoclicky.switchPvPSystemBind": "Переключить систему PvP",
+  "gui.autoclicky.oldCombatTitle": "Старое PvP (1.8)",
+  "gui.autoclicky.newCombatTitle": "Новое PvP (1.9+)",
+  "gui.autoclicky.minDelay": "Мин задержка",
+  "gui.autoclicky.maxDelay": "Макс задержка",
+  "gui.autoclicky.delayTooltip": "Задержка между кликами в тиках (1 тик = 50 мс)",
+  "gui.autoclicky.interrupt": "Прерывание",
+  "gui.autoclicky.interrupt.tooltip": "Прерывать использование предмета при атаке",
+  "gui.autoclicky.messages": "Уведомления",
+  "gui.autoclicky.messages.tooltip": "Показывать уведомления от autoclicky",
+  "gui.autoclicky.autoJump": "Авто прыжок",
+  "gui.autoclicky.autoJump.tooltip": "Автоматически прыгать когда прицел наведен на сущность",
+  "gui.autoclicky.onlyEntity": "Только сущности",
+  "gui.autoclicky.onlyEntity.tooltip": "Autoclicky будет атаковать только сущности",
+  "gui.autoclicky.save": "Сохранить",
+  "gui.autoclicky.cancel": "Отмена",
+  "gui.autoclicky.left": "Левая",
+  "gui.autoclicky.right": "Правая",
+  "gui.autoclicky.activated": "вкл.",
+  "gui.autoclicky.deactivated": "выкл.",
+  "gui.autoclicky.toggle.mouseButton": "кнопка мыши",
+  "gui.autoclicky.toggle.pvpSwitch": "Система PvP переключена на:"
 }

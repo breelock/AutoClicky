@@ -6,6 +6,7 @@ import com.breelock.autoclicky.widgets.TooltipSliderWidget;
 
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 
 public class NewCombat extends OldCombat {
     @Override
@@ -21,17 +22,17 @@ public class NewCombat extends OldCombat {
         int checkboxWidth = 95;
 
         // Select PvP system button
-        this.addButton(new ButtonWidget(this.width / 2 - 50, startY - spacing + 7, 100, 20, new LiteralText(ModConfig.pvpSystems.get(1)), button -> {
+        this.addButton(new ButtonWidget(this.width / 2 - 50, startY - spacing + 7, 100, 20, new LiteralText(new TranslatableText(ModConfig.pvpSystems.get(1)).getString()), button -> {
             save(true);
             ModConfig.selectedPvp = (ModConfig.PvP.values()[(ModConfig.selectedPvp.ordinal() + 1) % ModConfig.pvpSystems.size()]);
             this.client.openScreen(new OldCombat());
         }));
 
         // Left click - minimum click delay slider
-        leftMinDelaySlider = new TooltipSliderWidget(centerX - widgetWidth - columnSpacing / 2, startY + spacing, widgetWidth, 20, new LiteralText("Min Delay: " + ModConfig.NewPvP.leftMinDelay), ModConfig.NewPvP.leftMinDelay / 100.0, "Delay between clicks in ticks (1 tick = 50 ms)") {
+        leftMinDelaySlider = new TooltipSliderWidget(centerX - widgetWidth - columnSpacing / 2, startY + spacing, widgetWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.minDelay").getString() + ": " + ModConfig.NewPvP.leftMinDelay), ModConfig.NewPvP.leftMinDelay / 100.0, new TranslatableText("gui.autoclicky.delayTooltip").getString()) {
             @Override
             protected void updateMessage() {
-                this.setMessage(new LiteralText("Min Delay: " + (int)(this.value * 100)));
+                this.setMessage(new LiteralText(new TranslatableText("gui.autoclicky.minDelay").getString() + ": " + (int)(this.value * 100)));
             }
 
             @Override
@@ -42,10 +43,10 @@ public class NewCombat extends OldCombat {
         this.children.add(leftMinDelaySlider);
 
         // Left click - maximum click delay slider
-        leftMaxDelaySlider = new TooltipSliderWidget(centerX - widgetWidth - columnSpacing / 2, startY + 2 * spacing, widgetWidth, 20, new LiteralText("Max Delay: " + ModConfig.NewPvP.leftMaxDelay), ModConfig.NewPvP.leftMaxDelay / 100.0, "Delay between clicks in ticks (1 tick = 50 ms)") {
+        leftMaxDelaySlider = new TooltipSliderWidget(centerX - widgetWidth - columnSpacing / 2, startY + 2 * spacing, widgetWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.maxDelay").getString() + ": " + ModConfig.NewPvP.leftMaxDelay), ModConfig.NewPvP.leftMaxDelay / 100.0, new TranslatableText("gui.autoclicky.delayTooltip").getString()) {
             @Override
             protected void updateMessage() {
-                this.setMessage(new LiteralText("Max Delay: " + (int)(this.value * 100)));
+                this.setMessage(new LiteralText(new TranslatableText("gui.autoclicky.maxDelay").getString() + ": " + (int)(this.value * 100)));
             }
 
             @Override
@@ -56,10 +57,10 @@ public class NewCombat extends OldCombat {
         this.children.add(leftMaxDelaySlider);
 
         // Right click - minimum click delay slider
-        rightMinDelaySlider = new TooltipSliderWidget(centerX + columnSpacing / 2, startY + spacing, widgetWidth, 20, new LiteralText("Min Delay: " + ModConfig.NewPvP.rightMinDelay), ModConfig.NewPvP.rightMinDelay / 100.0, "Delay between clicks in ticks (1 tick = 50 ms)") {
+        rightMinDelaySlider = new TooltipSliderWidget(centerX + columnSpacing / 2, startY + spacing, widgetWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.minDelay").getString() + ": " + ModConfig.NewPvP.rightMinDelay), ModConfig.NewPvP.rightMinDelay / 100.0, new TranslatableText("gui.autoclicky.delayTooltip").getString()) {
             @Override
             protected void updateMessage() {
-                this.setMessage(new LiteralText("Min Delay: " + (int)(this.value * 100)));
+                this.setMessage(new LiteralText(new TranslatableText("gui.autoclicky.minDelay").getString() + ": " + (int)(this.value * 100)));
             }
 
             @Override
@@ -70,10 +71,10 @@ public class NewCombat extends OldCombat {
         this.children.add(rightMinDelaySlider);
 
         // Right click - maximum click delay slider
-        rightMaxDelaySlider = new TooltipSliderWidget(centerX + columnSpacing / 2, startY + 2 * spacing, widgetWidth, 20, new LiteralText("Max Delay: " + ModConfig.NewPvP.rightMaxDelay), ModConfig.NewPvP.rightMaxDelay / 100.0, "Delay between clicks in ticks (1 tick = 50 ms)") {
+        rightMaxDelaySlider = new TooltipSliderWidget(centerX + columnSpacing / 2, startY + 2 * spacing, widgetWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.maxDelay").getString() + ": " + ModConfig.NewPvP.rightMaxDelay), ModConfig.NewPvP.rightMaxDelay / 100.0, new TranslatableText("gui.autoclicky.delayTooltip").getString()) {
             @Override
             protected void updateMessage() {
-                this.setMessage(new LiteralText("Max Delay: " + (int)(this.value * 100)));
+                this.setMessage(new LiteralText(new TranslatableText("gui.autoclicky.maxDelay").getString() + ": " + (int)(this.value * 100)));
             }
 
             @Override
@@ -84,29 +85,29 @@ public class NewCombat extends OldCombat {
         this.children.add(rightMaxDelaySlider);
 
         // First click is instant checkbox
-        firstClickIsInstantCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 3 * spacing, 85, 20, new LiteralText("First instant"), ModConfig.NewPvP.firstClickIsInstant, "The first click is instant, will not wait for a delay");
-        this.children.add(firstClickIsInstantCheckbox);
+        interruptCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 3 * spacing, checkboxWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.interrupt").getString()), ModConfig.NewPvP.interrupt, new TranslatableText("gui.autoclicky.interrupt.tooltip").getString());
+        this.children.add(interruptCheckbox);
 
         // Show message checkbox
-        showMessageCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 3 * spacing, 73, 20, new LiteralText("Messages"), ModConfig.NewPvP.showMessage, "Show autoclicky messages in action bar");
+        showMessageCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 3 * spacing, checkboxWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.messages").getString()), ModConfig.NewPvP.showMessage, new TranslatableText("gui.autoclicky.messages.tooltip").getString());
         this.children.add(showMessageCheckbox);
 
         // Auto jump checkbox
-        autoJumpCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 4 * spacing, 74, 20, new LiteralText("Auto jump"), ModConfig.NewPvP.autoJump, "Autoclicky will jump when targeting an entity");
+        autoJumpCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 4 * spacing, checkboxWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.autoJump").getString()), ModConfig.NewPvP.autoJump, new TranslatableText("gui.autoclicky.autoJump.tooltip").getString());
         this.children.add(autoJumpCheckbox);
 
         // Attack only when targeting an entity checkbox
-        onlyEntityCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 4 * spacing, 78, 20, new LiteralText("Only entity"), ModConfig.NewPvP.onlyEntity, "Autoclicky will only attack when targeting an entity");
+        onlyEntityCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 4 * spacing, checkboxWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.onlyEntity").getString()), ModConfig.NewPvP.onlyEntity, new TranslatableText("gui.autoclicky.onlyEntity.tooltip").getString());
         this.children.add(onlyEntityCheckbox);
 
         // Save button
-        this.addButton(new ButtonWidget(centerX + 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText("Save"), button -> {
+        this.addButton(new ButtonWidget(centerX + 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.save").getString()), button -> {
             save(true);
             this.client.openScreen(null); // Close the screen
         }));
 
         // Exit without saving button
-        this.addButton(new ButtonWidget(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText("Cancel"), button -> {
+        this.addButton(new ButtonWidget(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.cancel").getString()), button -> {
             this.client.openScreen(null); // Close the screen without saving
         }));
     }

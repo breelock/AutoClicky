@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.MinecraftClient;
@@ -19,7 +19,7 @@ public class ModConfig {
     private static final Path configFilePath = Paths.get(MinecraftClient.getInstance().runDirectory.getAbsolutePath(), "config", "com.breelock.autoclicky.config.json");
 
     public static PvP selectedPvp = PvP.Old;
-    public static final List<String> pvpSystems = Arrays.asList("Old combat (1.8)", "New combat (1.9+)");
+    public static final List<String> pvpSystems = new ArrayList<String>() {{add("gui.autoclicky.oldCombatTitle"); add("gui.autoclicky.newCombatTitle");}};
 
     public static class OldPvP {
         public static int leftMinDelay = Default.leftMinDelay;
@@ -28,7 +28,7 @@ public class ModConfig {
         public static int rightMinDelay = Default.rightMinDelay;
         public static int rightMaxDelay = Default.rightMaxDelay;
 
-        public static boolean firstClickIsInstant = Default.firstClickIsInstant;
+        public static boolean interrupt = Default.interrupt;
         public static boolean showMessage = Default.showMessage;
         public static boolean autoJump = Default.autoJump;
         public static boolean onlyEntity = Default.onlyEntityOldPvP;
@@ -41,7 +41,7 @@ public class ModConfig {
         public static int rightMinDelay = Default.rightMinDelay;
         public static int rightMaxDelay = Default.rightMaxDelay;
 
-        public static boolean firstClickIsInstant = Default.firstClickIsInstant;
+        public static boolean interrupt = Default.interrupt;
         public static boolean showMessage = Default.showMessage;
         public static boolean autoJump = Default.autoJump;
         public static boolean onlyEntity = Default.onlyEntityNewPvP;
@@ -56,7 +56,7 @@ public class ModConfig {
         public static final int rightMinDelay = 0;
         public static final int rightMaxDelay = 1;
 
-        public static final boolean firstClickIsInstant = true;
+        public static final boolean interrupt = true;
         public static final boolean showMessage = true;
         public static final boolean autoJump = false;
 
@@ -80,7 +80,7 @@ public class ModConfig {
         config.addProperty("OldPvP.rightMinDelay", OldPvP.rightMinDelay);
         config.addProperty("OldPvP.rightMaxDelay", OldPvP.rightMaxDelay);
 
-        config.addProperty("OldPvP.firstClickIsInstant", OldPvP.firstClickIsInstant);
+        config.addProperty("OldPvP.interrupt", OldPvP.interrupt);
         config.addProperty("OldPvP.showMessage", OldPvP.showMessage);
         config.addProperty("OldPvP.autoJump", OldPvP.autoJump);
         config.addProperty("OldPvP.onlyEntity", OldPvP.onlyEntity);
@@ -91,7 +91,7 @@ public class ModConfig {
         config.addProperty("NewPvP.rightMinDelay", NewPvP.rightMinDelay);
         config.addProperty("NewPvP.rightMaxDelay", NewPvP.rightMaxDelay);
 
-        config.addProperty("NewPvP.firstClickIsInstant", NewPvP.firstClickIsInstant);
+        config.addProperty("NewPvP.interrupt", NewPvP.interrupt);
         config.addProperty("NewPvP.showMessage", NewPvP.showMessage);
         config.addProperty("NewPvP.autoJump", NewPvP.autoJump);
         config.addProperty("NewPvP.onlyEntity", NewPvP.onlyEntity);
@@ -117,7 +117,7 @@ public class ModConfig {
                 OldPvP.rightMinDelay = config.has("OldPvP.rightMinDelay") ? config.get("OldPvP.rightMinDelay").getAsInt() : Default.rightMinDelay;
                 OldPvP.rightMaxDelay = config.has("OldPvP.rightMaxDelay") ? config.get("OldPvP.rightMaxDelay").getAsInt() : Default.rightMaxDelay;
 
-                OldPvP.firstClickIsInstant = config.has("OldPvP.firstClickIsInstant") ? config.get("OldPvP.firstClickIsInstant").getAsBoolean() : Default.firstClickIsInstant;
+                OldPvP.interrupt = config.has("OldPvP.interrupt") ? config.get("OldPvP.interrupt").getAsBoolean() : Default.interrupt;
                 OldPvP.showMessage = config.has("OldPvP.showMessage") ? config.get("OldPvP.showMessage").getAsBoolean() : Default.showMessage;
                 OldPvP.autoJump = config.has("OldPvP.autoJump") ? config.get("OldPvP.autoJump").getAsBoolean() : Default.autoJump;
                 OldPvP.onlyEntity = config.has("OldPvP.onlyEntity") ? config.get("OldPvP.onlyEntity").getAsBoolean() : Default.onlyEntityOldPvP;
@@ -128,7 +128,7 @@ public class ModConfig {
                 NewPvP.rightMinDelay = config.has("NewPvP.rightMinDelay") ? config.get("NewPvP.rightMinDelay").getAsInt() : Default.rightMinDelay;
                 NewPvP.rightMaxDelay = config.has("NewPvP.rightMaxDelay") ? config.get("NewPvP.rightMaxDelay").getAsInt() : Default.rightMaxDelay;
 
-                NewPvP.firstClickIsInstant = config.has("NewPvP.firstClickIsInstant") ? config.get("NewPvP.firstClickIsInstant").getAsBoolean() : Default.firstClickIsInstant;
+                NewPvP.interrupt = config.has("NewPvP.interrupt") ? config.get("NewPvP.interrupt").getAsBoolean() : Default.interrupt;
                 NewPvP.showMessage = config.has("NewPvP.showMessage") ? config.get("NewPvP.showMessage").getAsBoolean() : Default.showMessage;
                 NewPvP.autoJump = config.has("NewPvP.autoJump") ? config.get("NewPvP.autoJump").getAsBoolean() : Default.autoJump;
                 NewPvP.onlyEntity = config.has("NewPvP.onlyEntity") ? config.get("NewPvP.onlyEntity").getAsBoolean() : Default.onlyEntityNewPvP;
@@ -153,7 +153,7 @@ public class ModConfig {
         OldPvP.rightMinDelay = Default.rightMinDelay;
         OldPvP.rightMaxDelay = Default.rightMaxDelay;
 
-        OldPvP.firstClickIsInstant = Default.firstClickIsInstant;
+        OldPvP.interrupt = Default.interrupt;
         OldPvP.showMessage = Default.showMessage;
         OldPvP.autoJump = Default.autoJump;
         OldPvP.onlyEntity = Default.onlyEntityOldPvP;
@@ -164,7 +164,7 @@ public class ModConfig {
         NewPvP.rightMinDelay = Default.rightMinDelay;
         NewPvP.rightMaxDelay = Default.rightMaxDelay;
 
-        NewPvP.firstClickIsInstant = Default.firstClickIsInstant;
+        NewPvP.interrupt = Default.interrupt;
         NewPvP.showMessage = Default.showMessage;
         NewPvP.autoJump = Default.autoJump;
         NewPvP.onlyEntity = Default.onlyEntityNewPvP;
