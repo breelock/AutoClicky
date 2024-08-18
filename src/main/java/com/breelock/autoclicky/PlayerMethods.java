@@ -4,7 +4,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -15,8 +14,12 @@ import net.minecraft.util.math.BlockPos;
 public class PlayerMethods {
     public static void attack(MinecraftClient client, boolean isNewPvP) {
         if (client.player != null && client.crosshairTarget != null && !client.player.isSpectator() && client.interactionManager != null && client.world != null) {
-            boolean isInLava = client.world.getBlockState(new BlockPos(client.player.getX(), client.player.getY(), client.player.getZ())).getBlock() == Blocks.LAVA || client.player.isSubmergedIn(FluidTags.LAVA);
+            boolean isInLava = client.world.getBlockState(new BlockPos(client.player.getX(), client.player.getY(), client.player.getZ())).getBlock() == Blocks.LAVA;
             boolean isOnGround = client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava;
+
+            ItemStack itemStack = client.player.getStackInHand(Hand.MAIN_HAND);
+            if (!itemStack.isItemEnabled(client.world.getEnabledFeatures()))
+                return;
 
             if (isNewPvP) {
                 if (ModConfig.NewPvP.onlyEntity) {

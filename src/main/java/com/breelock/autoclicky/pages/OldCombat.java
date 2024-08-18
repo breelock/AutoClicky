@@ -32,7 +32,7 @@ public class OldCombat extends Screen {
 
     @Override
     public void init() {
-        this.client.keyboard.setRepeatEvents(true);
+        // this.client.keyboard.setRepeatEvents(true);
 
         int centerX = this.width / 2;
         int startY = this.height / 4;
@@ -43,11 +43,11 @@ public class OldCombat extends Screen {
         int checkboxWidth = 95;
 
         // Select PvP system button
-        addDrawableChild(new ButtonWidget(this.width / 2 - 50, startY - spacing + 7, 100, 20, Text.literal(Text.translatable(ModConfig.pvpSystems.get(0)).getString()), button -> {
+        addDrawableChild(ButtonWidget.builder(Text.literal(Text.translatable(ModConfig.pvpSystems.get(0)).getString()), (button) -> {
             save(false);
             ModConfig.selectedPvp = (ModConfig.PvP.values()[(ModConfig.selectedPvp.ordinal() + 1) % ModConfig.pvpSystems.size()]);
             this.client.setScreen(new NewCombat());
-        }));
+        }).dimensions(this.width / 2 - 50, startY - spacing + 7, 100, 20).build());
 
         // Left click - minimum click delay slider
         leftMinDelaySlider = new TooltipSliderWidget(centerX - widgetWidth - columnSpacing / 2, startY + spacing, widgetWidth, 20, Text.literal(Text.translatable("gui.autoclicky.minDelay").getString() + ": " +  ModConfig.OldPvP.leftMinDelay), ModConfig.OldPvP.leftMinDelay / 100.0, Text.translatable("gui.autoclicky.delayTooltip").getString()) {
@@ -122,15 +122,15 @@ public class OldCombat extends Screen {
         addDrawableChild(onlyEntityCheckbox);
 
         // Save button
-        addDrawableChild(new ButtonWidget(centerX + 5, startY + 5 * spacing, buttonWidth, 20, Text.literal(Text.translatable("gui.autoclicky.save").getString()), button -> {
+        addDrawableChild(ButtonWidget.builder(Text.literal(Text.translatable("gui.autoclicky.save").getString()), (button) -> {
             save(false);
             this.client.setScreen(null); // Close the screen
-        }));
+        }).dimensions(centerX + 5, startY + 5 * spacing, buttonWidth, 20).build());
 
         // Exit without saving button
-        addDrawableChild(new ButtonWidget(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20, Text.literal(Text.translatable("gui.autoclicky.cancel").getString()), button -> {
+        addDrawableChild(ButtonWidget.builder(Text.literal(Text.translatable("gui.autoclicky.cancel").getString()), (button) -> {
             this.client.setScreen(null); // Close the screen
-        }));
+        }).dimensions(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20).build());
     }
 
     @Override
@@ -180,10 +180,12 @@ public class OldCombat extends Screen {
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
+    /*
     @Override
     public void close() {
         this.client.keyboard.setRepeatEvents(false);
     }
+    */
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {

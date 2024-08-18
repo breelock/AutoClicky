@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 public class NewCombat extends OldCombat {
     @Override
     public void init() {
-        this.client.keyboard.setRepeatEvents(true);
+        // this.client.keyboard.setRepeatEvents(true);
 
         int centerX = this.width / 2;
         int startY = this.height / 4;
@@ -21,11 +21,11 @@ public class NewCombat extends OldCombat {
         int checkboxWidth = 95;
 
         // Select PvP system button
-        addDrawableChild(new ButtonWidget(this.width / 2 - 50, startY - spacing + 7, 100, 20, Text.literal(Text.translatable(ModConfig.pvpSystems.get(1)).getString()), button -> {
+        addDrawableChild(ButtonWidget.builder(Text.literal(Text.translatable(ModConfig.pvpSystems.get(1)).getString()), (button) -> {
             save(true);
             ModConfig.selectedPvp = (ModConfig.PvP.values()[(ModConfig.selectedPvp.ordinal() + 1) % ModConfig.pvpSystems.size()]);
             this.client.setScreen(new OldCombat());
-        }));
+        }).dimensions(this.width / 2 - 50, startY - spacing + 7, 100, 20).build());
 
         // Left click - minimum click delay slider
         leftMinDelaySlider = new TooltipSliderWidget(centerX - widgetWidth - columnSpacing / 2, startY + spacing, widgetWidth, 20, Text.literal(Text.translatable("gui.autoclicky.minDelay").getString() + ": " + ModConfig.NewPvP.leftMinDelay), ModConfig.NewPvP.leftMinDelay / 100.0, Text.translatable("gui.autoclicky.delayTooltip").getString()) {
@@ -100,14 +100,14 @@ public class NewCombat extends OldCombat {
         addDrawableChild(onlyEntityCheckbox);
 
         // Save button
-        addDrawableChild(new ButtonWidget(centerX + 5, startY + 5 * spacing, buttonWidth, 20, Text.literal(Text.translatable("gui.autoclicky.save").getString()), button -> {
+        addDrawableChild(ButtonWidget.builder(Text.literal(Text.translatable("gui.autoclicky.save").getString()), (button) -> {
             save(true);
             this.client.setScreen(null); // Close the screen
-        }));
+        }).dimensions(centerX + 5, startY + 5 * spacing, buttonWidth, 20).build());
 
         // Exit without saving button
-        addDrawableChild(new ButtonWidget(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20, Text.literal(Text.translatable("gui.autoclicky.cancel").getString()), button -> {
+        addDrawableChild(ButtonWidget.builder(Text.literal(Text.translatable("gui.autoclicky.cancel").getString()), (button) -> {
             this.client.setScreen(null); // Close the screen
-        }));
+        }).dimensions(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20).build());
     }
 }
