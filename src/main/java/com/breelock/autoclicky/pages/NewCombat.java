@@ -108,7 +108,7 @@ public class NewCombat extends OldCombat {
 
         // Exit without saving button
         this.addButton(new ButtonWidget(centerX - buttonWidth - 5, startY + 5 * spacing, buttonWidth, 20, new LiteralText(new TranslatableText("gui.autoclicky.cancel").getString()), button -> {
-            this.client.openScreen(null); // Close the screen without saving
+            this.client.openScreen(null); // Close the screen
         }));
     }
 }

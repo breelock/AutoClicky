@@ -18,12 +18,6 @@ public class PlayerMethods {
             boolean isInLava = client.world.getBlockState(new BlockPos(client.player.getX(), client.player.getY(), client.player.getZ())).getBlock() == Blocks.LAVA || client.player.isSubmergedIn(FluidTags.LAVA);
             boolean isOnGround = client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava;
 
-            if (client.player.isUsingItem()) {
-                if (isNewPvP && ModConfig.NewPvP.interrupt || !isNewPvP && ModConfig.OldPvP.interrupt)
-                    client.interactionManager.stopUsingItem(client.player);
-                else
-                    return;
-            }
             if (isNewPvP) {
                 if (ModConfig.NewPvP.onlyEntity) {
                     if (client.crosshairTarget.getType() == HitResult.Type.ENTITY) {
@@ -31,8 +25,10 @@ public class PlayerMethods {
                             client.player.jump();
 
                         if (client.player.getAttackCooldownProgress(0.0F) >= 1.0F) {
-                            if (!isOnGround && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.abilities.flying || client.player.isTouchingWater() || isInLava)
+                            if (!isOnGround && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.abilities.flying || client.player.isTouchingWater() || isInLava) {
+                                if (interrupt(client, true)) return;
                                 PlayerMethods.attackEntity(client);
+                            }
                         }
                     }
                 }
@@ -41,6 +37,8 @@ public class PlayerMethods {
                         client.player.jump();
 
                     if (client.player.getAttackCooldownProgress(0.0F) >= 1.0F) {
+                        if (interrupt(client, true)) return;
+
                         if (client.crosshairTarget.getType() == HitResult.Type.ENTITY) {
                             if (!isOnGround && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.abilities.flying || client.player.isTouchingWater() || isInLava)
                                 PlayerMethods.attackEntity(client);
@@ -55,14 +53,18 @@ public class PlayerMethods {
                 }
             }
             else {
-                if (client.crosshairTarget.getType() == HitResult.Type.ENTITY && ModConfig.NewPvP.autoJump && client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava)
+                if (client.crosshairTarget.getType() == HitResult.Type.ENTITY && ModConfig.OldPvP.autoJump && client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava)
                     client.player.jump();
 
                 if (ModConfig.OldPvP.onlyEntity) {
-                    if (client.crosshairTarget.getType() == HitResult.Type.ENTITY)
+                    if (client.crosshairTarget.getType() == HitResult.Type.ENTITY) {
+                        if (interrupt(client, false)) return;
                         PlayerMethods.attackEntity(client);
+                    }
                 }
                 else {
+                    if (interrupt(client, false)) return;
+
                     if (client.crosshairTarget.getType() == HitResult.Type.ENTITY)
                         PlayerMethods.attackEntity(client);
                     else if (client.crosshairTarget.getType() == HitResult.Type.BLOCK)
@@ -91,6 +93,17 @@ public class PlayerMethods {
                 interactItem(client, hand);
             }
         }
+    }
+
+    private static boolean interrupt(MinecraftClient client, boolean isNewPvP) {
+        if (client != null && client.player != null && client.interactionManager != null && client.player.isUsingItem()) {
+            if (isNewPvP && ModConfig.NewPvP.interrupt || !isNewPvP && ModConfig.OldPvP.interrupt)
+                client.interactionManager.stopUsingItem(client.player);
+            else
+                return true;
+        }
+
+        return false;
     }
 
     private static void resetAttackCooldown(MinecraftClient client) {

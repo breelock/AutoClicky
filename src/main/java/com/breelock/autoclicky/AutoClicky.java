@@ -13,7 +13,6 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
-
 import org.lwjgl.glfw.GLFW;
 
 import org.apache.logging.log4j.LogManager;
