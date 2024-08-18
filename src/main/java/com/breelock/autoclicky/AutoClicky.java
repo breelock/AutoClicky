@@ -10,9 +10,8 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
 
+import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,10 +36,10 @@ public class AutoClicky implements ModInitializer {
         ModConfig.load();
 
         // Register key binds
-        leftBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(new TranslatableText("gui.autoclicky.leftBind").getString(), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "AutoClicky"));
-        rightBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(new TranslatableText("gui.autoclicky.rightBind").getString(), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, "AutoClicky"));
-        settingsBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(new TranslatableText("gui.autoclicky.settingsBind").getString(), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_N, "AutoClicky"));
-        switchPvPSystemBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(new TranslatableText("gui.autoclicky.switchPvPSystemBind").getString(), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, "AutoClicky"));
+        leftBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(Text.translatable("gui.autoclicky.leftBind").getString(), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "AutoClicky"));
+        rightBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(Text.translatable("gui.autoclicky.rightBind").getString(), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, "AutoClicky"));
+        settingsBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(Text.translatable("gui.autoclicky.settingsBind").getString(), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_N, "AutoClicky"));
+        switchPvPSystemBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(Text.translatable("gui.autoclicky.switchPvPSystemBind").getString(), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, "AutoClicky"));
 
         // Called every tick
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
@@ -66,10 +65,10 @@ public class AutoClicky implements ModInitializer {
                     ModConfig.selectedPvp = isNewPvp ? ModConfig.PvP.Old : ModConfig.PvP.New;
                     isNewPvp = ModConfig.selectedPvp == ModConfig.PvP.New;
 
-                    String combatTranslate = new TranslatableText(isNewPvp ? "gui.autoclicky.newCombatTitle" : "gui.autoclicky.oldCombatTitle").getString();
+                    String combatTranslate = Text.translatable(isNewPvp ? "gui.autoclicky.newCombatTitle" : "gui.autoclicky.oldCombatTitle").getString();
 
                     if (isNewPvp && ModConfig.NewPvP.showMessage || !isNewPvp && ModConfig.OldPvP.showMessage)
-                        client.player.sendMessage(new LiteralText(new TranslatableText("gui.autoclicky.toggle.pvpSwitch").getString() + " " + combatTranslate), true);
+                        client.player.sendMessage(Text.literal(Text.translatable("gui.autoclicky.toggle.pvpSwitch").getString() + " " + combatTranslate), true);
 
                     ModConfig.save();
                 }
@@ -125,16 +124,16 @@ public class AutoClicky implements ModInitializer {
 
             currentDelay = 0;
 
-            String isLeftTranslate = new TranslatableText(isLeft ? "gui.autoclicky.left" : "gui.autoclicky.right").getString();
-            String btnIsNowEnabledTranslate = new TranslatableText(btnIsNowEnabled ? "gui.autoclicky.activated" : "gui.autoclicky.deactivated").getString();
-            String isNewPvPTranslate = "[" + new TranslatableText(isNewPvP ? "gui.autoclicky.newCombatTitle" : "gui.autoclicky.oldCombatTitle").getString() + "]";
+            String isLeftTranslate = Text.translatable(isLeft ? "gui.autoclicky.left" : "gui.autoclicky.right").getString();
+            String btnIsNowEnabledTranslate = Text.translatable(btnIsNowEnabled ? "gui.autoclicky.activated" : "gui.autoclicky.deactivated").getString();
+            String isNewPvPTranslate = "[" + Text.translatable(isNewPvP ? "gui.autoclicky.newCombatTitle" : "gui.autoclicky.oldCombatTitle").getString() + "]";
 
             if (isNewPvP && ModConfig.NewPvP.showMessage || !isNewPvP && ModConfig.OldPvP.showMessage) {
-                String text = "[" + isLeftTranslate + " " + new TranslatableText("gui.autoclicky.toggle.mouseButton").getString() + "] AutoClicky " + btnIsNowEnabledTranslate;
+                String text = "[" + isLeftTranslate + " " + Text.translatable("gui.autoclicky.toggle.mouseButton").getString() + "] AutoClicky " + btnIsNowEnabledTranslate;
                 if (isLeft)
                     text += " " + isNewPvPTranslate;
 
-                client.player.sendMessage(new LiteralText(text), true);
+                client.player.sendMessage(Text.literal(text), true);
             }
         }
     }

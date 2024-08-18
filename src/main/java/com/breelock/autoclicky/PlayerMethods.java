@@ -137,10 +137,14 @@ public class PlayerMethods {
     }
 
     private static boolean interactEntity(MinecraftClient client, Hand hand) {
-        if (client != null && client.interactionManager != null && client.player != null) {
+        if (client != null && client.interactionManager != null && client.player != null && client.world != null) {
             EntityHitResult entityHitResult = (EntityHitResult) client.crosshairTarget;
             if (entityHitResult != null) {
                 Entity entity = entityHitResult.getEntity();
+                if (!client.world.getWorldBorder().contains(entity.getBlockPos())) {
+                    return true;
+                }
+
                 ActionResult actionResult = client.interactionManager.interactEntityAtLocation(client.player, entity, entityHitResult, hand);
                 if (!actionResult.isAccepted()) {
                     actionResult = client.interactionManager.interactEntity(client.player, entity, hand);
@@ -164,7 +168,7 @@ public class PlayerMethods {
             ItemStack itemStack = client.player.getStackInHand(hand);
             BlockHitResult blockHitResult = (BlockHitResult)client.crosshairTarget;
             int i = itemStack.getCount();
-            ActionResult actionResult = client.interactionManager.interactBlock(client.player, client.world, hand, blockHitResult);
+            ActionResult actionResult = client.interactionManager.interactBlock(client.player, hand, blockHitResult);
             if (actionResult.isAccepted()) {
                 if (actionResult.shouldSwingHand()) {
                     client.player.swingHand(hand);
@@ -186,7 +190,7 @@ public class PlayerMethods {
         if (client != null && client.interactionManager != null && client.player != null) {
             ItemStack itemStack = client.player.getStackInHand(hand);
             if (!itemStack.isEmpty()) {
-                ActionResult actionResult = client.interactionManager.interactItem(client.player, client.world, hand);
+                ActionResult actionResult = client.interactionManager.interactItem(client.player, hand);
                 if (actionResult.isAccepted()) {
                     if (actionResult.shouldSwingHand()) {
                         client.player.swingHand(hand);
