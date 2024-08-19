@@ -1,10 +1,11 @@
 package com.breelock.autoclicky.pages;
 
 import com.breelock.autoclicky.ModConfig;
-import com.breelock.autoclicky.widgets.TooltipCheckboxWidget;
 import com.breelock.autoclicky.widgets.TooltipSliderWidget;
 
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.text.Text;
 
 public class NewCombat extends OldCombat {
@@ -84,19 +85,19 @@ public class NewCombat extends OldCombat {
         addDrawableChild(rightMaxDelaySlider);
 
         // First click is instant checkbox
-        interruptCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 3 * spacing, checkboxWidth, 20, Text.literal(Text.translatable("gui.autoclicky.interrupt").getString()), ModConfig.NewPvP.interrupt, Text.translatable("gui.autoclicky.interrupt.tooltip").getString());
+        interruptCheckbox = CheckboxWidget.builder(Text.translatable("gui.autoclicky.interrupt"), this.textRenderer).pos(centerX + columnSpacing / 2, startY + 3 * spacing).maxWidth(checkboxWidth).tooltip(Tooltip.of(Text.translatable("gui.autoclicky.interrupt.tooltip"))).checked(ModConfig.NewPvP.interrupt).build();
         addDrawableChild(interruptCheckbox);
 
         // Show message checkbox
-        showMessageCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 3 * spacing, checkboxWidth, 20, Text.literal(Text.translatable("gui.autoclicky.messages").getString()), ModConfig.NewPvP.showMessage, Text.translatable("gui.autoclicky.messages.tooltip").getString());
+        showMessageCheckbox = CheckboxWidget.builder(Text.translatable("gui.autoclicky.messages"), this.textRenderer).pos(centerX - checkboxWidth - columnSpacing / 2, startY + 3 * spacing).maxWidth(checkboxWidth).tooltip(Tooltip.of(Text.translatable("gui.autoclicky.messages.tooltip"))).checked(ModConfig.NewPvP.showMessage).build();
         addDrawableChild(showMessageCheckbox);
 
         // Auto jump checkbox
-        autoJumpCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 4 * spacing, checkboxWidth, 20, Text.literal(Text.translatable("gui.autoclicky.autoJump").getString()), ModConfig.NewPvP.autoJump, Text.translatable("gui.autoclicky.autoJump.tooltip").getString());
+        autoJumpCheckbox = CheckboxWidget.builder(Text.translatable("gui.autoclicky.autoJump"), this.textRenderer).pos(centerX - checkboxWidth - columnSpacing / 2, startY + 4 * spacing).maxWidth(checkboxWidth).tooltip(Tooltip.of(Text.translatable("gui.autoclicky.autoJump.tooltip"))).checked(ModConfig.NewPvP.autoJump).build();
         addDrawableChild(autoJumpCheckbox);
 
         // Attack only when targeting an entity checkbox
-        onlyEntityCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 4 * spacing, checkboxWidth, 20, Text.literal(Text.translatable("gui.autoclicky.onlyEntity").getString()), ModConfig.NewPvP.onlyEntity, Text.translatable("gui.autoclicky.onlyEntity.tooltip").getString());
+        onlyEntityCheckbox = CheckboxWidget.builder(Text.translatable("gui.autoclicky.onlyEntity"), this.textRenderer).pos(centerX + columnSpacing / 2, startY + 4 * spacing).maxWidth(checkboxWidth).tooltip(Tooltip.of(Text.translatable("gui.autoclicky.onlyEntity.tooltip"))).checked(ModConfig.NewPvP.onlyEntity).build();
         addDrawableChild(onlyEntityCheckbox);
 
         // Save button

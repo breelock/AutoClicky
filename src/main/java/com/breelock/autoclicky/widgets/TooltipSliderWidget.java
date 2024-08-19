@@ -15,8 +15,8 @@ public abstract class TooltipSliderWidget extends SliderWidget {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.renderWidget(context, mouseX, mouseY, delta);
 
         // Check if the mouse is hovering over the slider
         if (this.isMouseOver(mouseX, mouseY) && this.tooltipText != null && !this.tooltipText.trim().isEmpty()) {

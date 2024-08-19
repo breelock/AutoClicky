@@ -2,13 +2,14 @@ package com.breelock.autoclicky.pages;
 
 import com.breelock.autoclicky.ModConfig;
 import com.breelock.autoclicky.Utils;
-import com.breelock.autoclicky.widgets.TooltipCheckboxWidget;
 import com.breelock.autoclicky.widgets.TooltipSliderWidget;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -19,10 +20,10 @@ public class OldCombat extends Screen {
     protected TooltipSliderWidget leftMaxDelaySlider;
     protected TooltipSliderWidget rightMinDelaySlider;
     protected TooltipSliderWidget rightMaxDelaySlider;
-    protected TooltipCheckboxWidget interruptCheckbox;
-    protected TooltipCheckboxWidget showMessageCheckbox;
-    protected TooltipCheckboxWidget autoJumpCheckbox;
-    protected TooltipCheckboxWidget onlyEntityCheckbox;
+    protected CheckboxWidget interruptCheckbox;
+    protected CheckboxWidget showMessageCheckbox;
+    protected CheckboxWidget autoJumpCheckbox;
+    protected CheckboxWidget onlyEntityCheckbox;
     protected final MinecraftClient client;
 
     public OldCombat() {
@@ -106,19 +107,19 @@ public class OldCombat extends Screen {
         addDrawableChild(rightMaxDelaySlider);
 
         // Interrupt the item use when left click
-        interruptCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 3 * spacing, checkboxWidth, 20, Text.literal(Text.translatable("gui.autoclicky.interrupt").getString()), ModConfig.OldPvP.interrupt, Text.translatable("gui.autoclicky.interrupt.tooltip").getString());
+        interruptCheckbox = CheckboxWidget.builder(Text.translatable("gui.autoclicky.interrupt"), this.textRenderer).pos(centerX + columnSpacing / 2, startY + 3 * spacing).maxWidth(checkboxWidth).tooltip(Tooltip.of(Text.translatable("gui.autoclicky.interrupt.tooltip"))).checked(ModConfig.OldPvP.interrupt).build();
         addDrawableChild(interruptCheckbox);
 
         // Show message checkbox
-        showMessageCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 3 * spacing, checkboxWidth, 20, Text.literal(Text.translatable("gui.autoclicky.messages").getString()), ModConfig.OldPvP.showMessage, Text.translatable("gui.autoclicky.messages.tooltip").getString());
+        showMessageCheckbox = CheckboxWidget.builder(Text.translatable("gui.autoclicky.messages"), this.textRenderer).pos(centerX - checkboxWidth - columnSpacing / 2, startY + 3 * spacing).maxWidth(checkboxWidth).tooltip(Tooltip.of(Text.translatable("gui.autoclicky.messages.tooltip"))).checked(ModConfig.OldPvP.showMessage).build();
         addDrawableChild(showMessageCheckbox);
 
         // Auto jump checkbox
-        autoJumpCheckbox = new TooltipCheckboxWidget(centerX - checkboxWidth - columnSpacing / 2, startY + 4 * spacing, checkboxWidth, 20, Text.literal(Text.translatable("gui.autoclicky.autoJump").getString()), ModConfig.OldPvP.autoJump, Text.translatable("gui.autoclicky.autoJump.tooltip").getString());
+        autoJumpCheckbox = CheckboxWidget.builder(Text.translatable("gui.autoclicky.autoJump"), this.textRenderer).pos(centerX - checkboxWidth - columnSpacing / 2, startY + 4 * spacing).maxWidth(checkboxWidth).tooltip(Tooltip.of(Text.translatable("gui.autoclicky.autoJump.tooltip"))).checked(ModConfig.OldPvP.autoJump).build();
         addDrawableChild(autoJumpCheckbox);
 
         // Attack only when targeting an entity checkbox
-        onlyEntityCheckbox = new TooltipCheckboxWidget(centerX + columnSpacing / 2, startY + 4 * spacing, checkboxWidth, 20, Text.literal(Text.translatable("gui.autoclicky.onlyEntity").getString()), ModConfig.OldPvP.onlyEntity, Text.translatable("gui.autoclicky.onlyEntity.tooltip").getString());
+        onlyEntityCheckbox = CheckboxWidget.builder(Text.translatable("gui.autoclicky.onlyEntity"), this.textRenderer).pos(centerX + columnSpacing / 2, startY + 4 * spacing).maxWidth(checkboxWidth).tooltip(Tooltip.of(Text.translatable("gui.autoclicky.onlyEntity.tooltip"))).checked(ModConfig.OldPvP.onlyEntity).build();
         addDrawableChild(onlyEntityCheckbox);
 
         // Save button
@@ -135,15 +136,15 @@ public class OldCombat extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context);
+        super.render(context, mouseX, mouseY, delta);
 
         // Draw title
-        context.drawText(this.textRenderer, this.title, (this.width - this.textRenderer.getWidth(this.title)) / 2, this.height / 4 - 50, 16777215, false);
-        context.drawText(this.textRenderer, Text.literal("by breelock").formatted(Formatting.GRAY), (this.width - this.textRenderer.getWidth("by breelock")) / 2, this.height / 4 - 50 + 10, 16777215, false);
+        context.drawText(this.textRenderer, this.title, (this.width - this.textRenderer.getWidth(this.title)) / 2, this.height / 4 - 50, 16777215, true);
+        context.drawText(this.textRenderer, Text.literal("by breelock").formatted(Formatting.GRAY), (this.width - this.textRenderer.getWidth("by breelock")) / 2, this.height / 4 - 50 + 10, 16777215, true);
 
         // Draw labels
-        context.drawText(this.textRenderer, Text.translatable("gui.autoclicky.leftBind"), Math.round((float) this.width / 2 - 95 - 10f / 2 + 2), this.height / 4 + 10, 16777215, false);
-        context.drawText(this.textRenderer, Text.translatable("gui.autoclicky.rightBind"), Math.round((float) this.width / 2 + 10f / 2 + 2), this.height / 4 + 10, 16777215, false);
+        context.drawText(this.textRenderer, Text.translatable("gui.autoclicky.leftBind"), Math.round((float) this.width / 2 - 95 - 10f / 2 + 2), this.height / 4 + 10, 16777215, true);
+        context.drawText(this.textRenderer, Text.translatable("gui.autoclicky.rightBind"), Math.round((float) this.width / 2 + 10f / 2 + 2), this.height / 4 + 10, 16777215, true);
 
         // Draw sliders
         leftMinDelaySlider.render(context, mouseX, mouseY, delta);
@@ -156,8 +157,6 @@ public class OldCombat extends Screen {
         showMessageCheckbox.render(context, mouseX, mouseY, delta);
         autoJumpCheckbox.render(context, mouseX, mouseY, delta);
         onlyEntityCheckbox.render(context, mouseX, mouseY, delta);
-
-        super.render(context, mouseX, mouseY, delta);
     }
 
     @Override
