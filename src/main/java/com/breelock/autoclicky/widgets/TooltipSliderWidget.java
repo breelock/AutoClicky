@@ -1,26 +1,30 @@
 package com.breelock.autoclicky.widgets;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.SliderWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public abstract class TooltipSliderWidget extends SliderWidget {
-
     private final String tooltipText;
 
     public TooltipSliderWidget(int x, int y, int width, int height, Text text, double value, String tooltipText) {
         super(x, y, width, height, text, value);
         this.tooltipText = tooltipText;
+        this.updateMessage();
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
 
-        if (isHovered() && MinecraftClient.getInstance().currentScreen != null && tooltipText != null) {
-            MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, Text.literal(tooltipText), mouseX, mouseY);
+        // Check if the mouse is hovering over the slider
+        if (this.isMouseOver(mouseX, mouseY) && this.tooltipText != null && !this.tooltipText.trim().isEmpty()) {
+            renderTooltip(context, mouseX, mouseY);
         }
     }
-}
 
+    private void renderTooltip(DrawContext context, int mouseX, int mouseY) {
+        context.drawTooltip(MinecraftClient.getInstance().textRenderer, Text.of(tooltipText), mouseX, mouseY);
+    }
+}

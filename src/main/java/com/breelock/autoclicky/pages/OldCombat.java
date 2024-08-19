@@ -6,9 +6,9 @@ import com.breelock.autoclicky.widgets.TooltipCheckboxWidget;
 import com.breelock.autoclicky.widgets.TooltipSliderWidget;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -134,30 +134,30 @@ public class OldCombat extends Screen {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        this.renderBackground(matrices);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackground(context);
 
         // Draw title
-        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, this.height / 4 - 50, 16777215);
-        drawCenteredTextWithShadow(matrices, this.textRenderer, Text.literal("by breelock").formatted(Formatting.GRAY), this.width / 2, this.height / 4 - 50 + 10, 16777215);
+        context.drawText(this.textRenderer, this.title, (this.width - this.textRenderer.getWidth(this.title)) / 2, this.height / 4 - 50, 16777215, false);
+        context.drawText(this.textRenderer, Text.literal("by breelock").formatted(Formatting.GRAY), (this.width - this.textRenderer.getWidth("by breelock")) / 2, this.height / 4 - 50 + 10, 16777215, false);
 
         // Draw labels
-        this.textRenderer.draw(matrices, Text.literal(Text.translatable("gui.autoclicky.leftBind").getString()), (float) this.width / 2 - 95 - 10f / 2 + 2, (float) this.height / 4 + 10, 16777215);
-        this.textRenderer.draw(matrices, Text.literal(Text.translatable("gui.autoclicky.rightBind").getString()), (float) this.width / 2 + 10f / 2 + 2, (float) this.height / 4 + 10, 16777215);
+        context.drawText(this.textRenderer, Text.translatable("gui.autoclicky.leftBind"), Math.round((float) this.width / 2 - 95 - 10f / 2 + 2), this.height / 4 + 10, 16777215, false);
+        context.drawText(this.textRenderer, Text.translatable("gui.autoclicky.rightBind"), Math.round((float) this.width / 2 + 10f / 2 + 2), this.height / 4 + 10, 16777215, false);
 
         // Draw sliders
-        leftMinDelaySlider.render(matrices, mouseX, mouseY, delta);
-        leftMaxDelaySlider.render(matrices, mouseX, mouseY, delta);
-        rightMinDelaySlider.render(matrices, mouseX, mouseY, delta);
-        rightMaxDelaySlider.render(matrices, mouseX, mouseY, delta);
+        leftMinDelaySlider.render(context, mouseX, mouseY, delta);
+        leftMaxDelaySlider.render(context, mouseX, mouseY, delta);
+        rightMinDelaySlider.render(context, mouseX, mouseY, delta);
+        rightMaxDelaySlider.render(context, mouseX, mouseY, delta);
 
         // Draw checkboxes
-        interruptCheckbox.render(matrices, mouseX, mouseY, delta);
-        showMessageCheckbox.render(matrices, mouseX, mouseY, delta);
-        autoJumpCheckbox.render(matrices, mouseX, mouseY, delta);
-        onlyEntityCheckbox.render(matrices, mouseX, mouseY, delta);
+        interruptCheckbox.render(context, mouseX, mouseY, delta);
+        showMessageCheckbox.render(context, mouseX, mouseY, delta);
+        autoJumpCheckbox.render(context, mouseX, mouseY, delta);
+        onlyEntityCheckbox.render(context, mouseX, mouseY, delta);
 
-        super.render(matrices, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
     }
 
     @Override
