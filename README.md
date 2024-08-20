@@ -1,7 +1,7 @@
 # AutoClicky (Fabric)
-Best in-game minecraft autoclicker
+Best in-game minecraft autoclicker (click on this preview photo to see video demonstration)
 
-![AutoClickyPreview](https://i.ibb.co/vcS14hP/eng-preview.png)
+[![Click to see preview video](https://i.ibb.co/WfBpgJ9/2024-08-20-19-21-50.png)](https://www.youtube.com/watch?v=C8sh3hMvoHk)
 
 ## Features
 - In `new combat system` mode, Autoclicky will click exactly on the timing when the weapon's cooldown is over to do a lot of damage
@@ -21,7 +21,7 @@ Best in-game minecraft autoclicker
 - You can change all of these keys in the minecraft control settings
 
 ## Download
-- [GitHub Releases](https://github.com/breelock/autoclicky/releases) (New versions appear here before anyone else)
+- [GitHub Releases](https://github.com/breelock/autoclicky/releases)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/autoclicky)
 - [Modrinth](https://modrinth.com/mod/autoclicky)
 
