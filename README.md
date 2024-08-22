@@ -20,6 +20,9 @@ Best in-game minecraft autoclicker (click on this preview photo to see video dem
 - Use `H` to switch between the new or old combat system
 - You can change all of these keys in the minecraft control settings
 
+## Disclaimer
+I (mod author) do not take any responsibility for your banned accounts on public servers. If you want to use AutoClicky on public servers, you take all responsibility on yourself. The mod is recommended to use in single player game
+
 ## Download
 - [GitHub Releases](https://github.com/breelock/autoclicky/releases)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/autoclicky)
