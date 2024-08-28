@@ -27,6 +27,7 @@ I (mod author) do not take any responsibility for your banned accounts on public
 - [GitHub Releases](https://github.com/breelock/autoclicky/releases)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/autoclicky)
 - [Modrinth](https://modrinth.com/mod/autoclicky)
+- [Minecraft Inside](https://minecraft-inside.ru/mods/178960-autoclicky.html)
 
 ## Dependencies
 - [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
