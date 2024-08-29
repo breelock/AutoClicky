@@ -3,48 +3,64 @@ package com.breelock.autoclicky;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 public class PlayerMethods {
     public static void attack(MinecraftClient client, boolean isNewPvP) {
         if (client.player != null && client.crosshairTarget != null && !client.player.isSpectator() && client.interactionManager != null && client.world != null) {
-            boolean isInLava = client.world.getBlockState(client.player.getBlockPos()).getBlock() == Blocks.LAVA;
-            boolean isOnGround = client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava;
 
             ItemStack itemStack = client.player.getStackInHand(Hand.MAIN_HAND);
             if (!itemStack.isItemEnabled(client.world.getEnabledFeatures()))
                 return;
 
+            boolean isInLava = client.world.getBlockState(client.player.getBlockPos()).getBlock() == Blocks.LAVA;
+            boolean isOnGround = client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava;
+
+            float jumpCooldown = 400f;
+            float cooldownTime = getAttackSpeedInTicks(client.player) * 50;
+            float attackCooldown = getAttackCooldownInTicks(client.player) * 50;
+
             if (isNewPvP) {
                 if (ModConfig.NewPvP.onlyEntity) {
                     if (client.crosshairTarget.getType() == HitResult.Type.ENTITY) {
-                        if (client.player.getAttackCooldownProgress(0.0F) >= 0.7F && ModConfig.NewPvP.autoJump && client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava)
-                            client.player.jump();
+                        if (!targetIsProtectedByShield(client, ((EntityHitResult) client.crosshairTarget).getEntity())) {
+                            if (attackCooldown >= cooldownTime - jumpCooldown && ModConfig.NewPvP.autoJump && client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava)
+                                client.player.jump();
 
-                        if (client.player.getAttackCooldownProgress(0.0F) >= 1.0F) {
-                            if (!isOnGround && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.getAbilities().flying || client.player.isTouchingWater() || isInLava) {
-                                if (interrupt(client, true)) return;
-                                PlayerMethods.attackEntity(client);
+                            if (attackCooldown >= cooldownTime) {
+                                if (!isOnGround && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.getAbilities().flying || client.player.isTouchingWater() || isInLava) {
+                                    if (interrupt(client, true)) return;
+                                    PlayerMethods.attackEntity(client);
+                                }
                             }
                         }
                     }
                 }
                 else {
-                    if (client.crosshairTarget.getType() == HitResult.Type.ENTITY && client.player.getAttackCooldownProgress(0.0F) >= 0.7F && ModConfig.NewPvP.autoJump && client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava)
-                        client.player.jump();
+                    if (client.crosshairTarget.getType() == HitResult.Type.ENTITY && attackCooldown >= cooldownTime - jumpCooldown && ModConfig.NewPvP.autoJump && client.player.isOnGround() && !client.player.isTouchingWater() && !isInLava) {
+                        if (!targetIsProtectedByShield(client, ((EntityHitResult) client.crosshairTarget).getEntity()))
+                            client.player.jump();
+                    }
 
-                    if (client.player.getAttackCooldownProgress(0.0F) >= 1.0F) {
+                    if (attackCooldown >= cooldownTime) {
                         if (interrupt(client, true)) return;
 
                         if (client.crosshairTarget.getType() == HitResult.Type.ENTITY) {
-                            if (!isOnGround && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.getAbilities().flying || client.player.isTouchingWater() || isInLava)
-                                PlayerMethods.attackEntity(client);
+                            if (!targetIsProtectedByShield(client, ((EntityHitResult) client.crosshairTarget).getEntity())) {
+                                if (!isOnGround && client.player.getVelocity().y < -0.1 || client.player.isOnGround() || client.player.getAbilities().flying || client.player.isTouchingWater() || isInLava)
+                                    PlayerMethods.attackEntity(client);
+                            }
                         }
                         else if (client.crosshairTarget.getType() == HitResult.Type.BLOCK)
                             PlayerMethods.breakBlock(client);
@@ -123,6 +139,30 @@ public class PlayerMethods {
 
             client.player.swingHand(Hand.MAIN_HAND);
         }
+    }
+
+    private static boolean targetIsProtectedByShield(MinecraftClient client, Entity targetEntity) {
+        if (client.player != null) {
+            if (targetEntity instanceof PlayerEntity) {
+                PlayerEntity targetPlayer = (PlayerEntity) targetEntity;
+                ItemStack heldItem = client.player.getMainHandStack();
+                if (heldItem.getItem() instanceof AxeItem)
+                    return false;
+
+                return targetPlayer.isUsingItem() && targetPlayer.getActiveItem().getItem() == Items.SHIELD;
+            }
+        }
+        return false;
+    }
+
+    private static int getAttackCooldownInTicks(PlayerEntity player) {
+        float cooldown = player.getAttackCooldownProgress(0.0f);
+        return MathHelper.ceil(cooldown * getAttackSpeedInTicks(player));
+    }
+
+    private static float getAttackSpeedInTicks(PlayerEntity player) {
+        float attackSpeed = (float) player.getAttributeValue(EntityAttributes.GENERIC_ATTACK_SPEED);
+        return (1.0f / attackSpeed) * 20.0f;
     }
 
     private static void breakBlock(MinecraftClient client) {
