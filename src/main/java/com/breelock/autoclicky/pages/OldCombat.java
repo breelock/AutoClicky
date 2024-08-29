@@ -138,8 +138,8 @@ public class OldCombat extends Screen {
         this.renderBackground(matrices);
 
         // Draw title
-        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.width / 2, this.height / 4 - 50, 16777215);
-        drawCenteredTextWithShadow(matrices, this.textRenderer, Text.literal("by breelock").formatted(Formatting.GRAY), this.width / 2, this.height / 4 - 50 + 10, 16777215);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, this.title.asOrderedText(), this.width / 2, this.height / 4 - 50, 16777215);
+        drawCenteredTextWithShadow(matrices, this.textRenderer, Text.literal("by breelock").formatted(Formatting.GRAY).asOrderedText(), this.width / 2, this.height / 4 - 50 + 10, 16777215);
 
         // Draw labels
         this.textRenderer.draw(matrices, Text.literal(Text.translatable("gui.autoclicky.leftBind").getString()), (float) this.width / 2 - 95 - 10f / 2 + 2, (float) this.height / 4 + 10, 16777215);
