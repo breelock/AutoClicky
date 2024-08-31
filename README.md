@@ -23,6 +23,9 @@ Best in-game minecraft autoclicker (click on this preview photo to see video dem
 ## Disclaimer
 I (mod author) do not take any responsibility for your banned accounts on public servers. If you want to use AutoClicky on public servers, you take all responsibility on yourself. The mod is recommended to use in single player game
 
+## Additionally
+Since the mod is young, there may be a lot of bugs in it. If you find a bug or want to suggest an idea (for example: make a port of the mod to another version of the game), feel free to post on [GitHub issues](https://github.com/breelock/autoclicky/issues) for bugs and [GitHub discussions](https://github.com/breelock/AutoClicky/discussions) for suggestions or questions. It's very important to me!
+
 ## Download
 - [GitHub Releases](https://github.com/breelock/autoclicky/releases)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/autoclicky)
